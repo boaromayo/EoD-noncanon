@@ -1,0 +1,81 @@
+dialog{
+  id = "_treasure.sword.1",
+  text = [[
+You found a sword!
+Press C to slash your way
+to victory (or escape)!
+]]
+}
+
+dialog{
+  id = "fern.hello",
+  text = [[
+Hello! Lookin' for someone
+who can help me with
+something.
+]]
+}
+
+dialog{
+  id = "fern.hello2",
+  text = [[
+]]
+}
+
+dialog{
+  id = "fern.no",
+  text = [[
+I see. If you're not that 
+busy, come and help old Fern, 
+won't you?
+]]
+}
+
+dialog{
+  id = "fern.request",
+  question = "1",
+  text = [[
+Can you help me?
+ $? Sure
+ $? No
+]]
+}
+
+dialog{
+  id = "fern.reward",
+  text = [[
+]]
+}
+
+dialog{
+  id = "fern.tip",
+  text = [[
+]]
+}
+
+dialog{
+  id = "fern.weapon",
+  text = [[
+A box of weapons is in the chest
+next to me.
+
+
+Please find my very, uber important
+item quickly, please!
+]]
+}
+
+dialog{
+  id = "fern.yes",
+  text = [[
+Good!
+I've lost my special,
+super important item in the
+dungeon below.
+
+
+Please find it for me down
+there!
+]]
+}
+
