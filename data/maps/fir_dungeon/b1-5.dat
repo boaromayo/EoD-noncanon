@@ -1,0 +1,391 @@
+properties{
+  x = 640,
+  y = 0,
+  width = 320,
+  height = 240,
+  min_layer = 0,
+  max_layer = 2,
+  tileset = "castle",
+  music = "cave",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 0,
+  width = 320,
+  height = 240,
+  pattern = "3",
+}
+
+tile{
+  layer = 0,
+  x = 304,
+  y = 192,
+  width = 16,
+  height = 16,
+  pattern = "38",
+}
+
+tile{
+  layer = 0,
+  x = 56,
+  y = 224,
+  width = 96,
+  height = 16,
+  pattern = "37",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 32,
+  width = 8,
+  height = 160,
+  pattern = "30",
+}
+
+tile{
+  layer = 0,
+  x = 312,
+  y = 32,
+  width = 8,
+  height = 160,
+  pattern = "31",
+}
+
+tile{
+  layer = 0,
+  x = 168,
+  y = 224,
+  width = 96,
+  height = 16,
+  pattern = "37",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 192,
+  width = 16,
+  height = 16,
+  pattern = "36",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 208,
+  width = 48,
+  height = 32,
+  pattern = "86",
+}
+
+tile{
+  layer = 0,
+  x = 16,
+  y = 192,
+  width = 32,
+  height = 16,
+  pattern = "37",
+}
+
+tile{
+  layer = 0,
+  x = 48,
+  y = 224,
+  width = 16,
+  height = 16,
+  pattern = "36",
+}
+
+tile{
+  layer = 0,
+  x = 272,
+  y = 192,
+  width = 32,
+  height = 16,
+  pattern = "37",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 0,
+  width = 56,
+  height = 32,
+  pattern = "86",
+}
+
+tile{
+  layer = 0,
+  x = 264,
+  y = 0,
+  width = 56,
+  height = 32,
+  pattern = "86",
+}
+
+tile{
+  layer = 0,
+  x = 272,
+  y = 208,
+  width = 48,
+  height = 32,
+  pattern = "86",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 32,
+  width = 8,
+  height = 16,
+  pattern = "32",
+}
+
+tile{
+  layer = 0,
+  x = 8,
+  y = 32,
+  width = 48,
+  height = 16,
+  pattern = "33",
+}
+
+tile{
+  layer = 0,
+  x = 40,
+  y = 32,
+  width = 16,
+  height = 16,
+  pattern = "38",
+}
+
+tile{
+  layer = 0,
+  x = 48,
+  y = 0,
+  width = 8,
+  height = 32,
+  pattern = "31",
+}
+
+tile{
+  layer = 0,
+  x = 312,
+  y = 32,
+  width = 8,
+  height = 16,
+  pattern = "35",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 64,
+  width = 16,
+  height = 16,
+  pattern = "7",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 160,
+  width = 16,
+  height = 16,
+  pattern = "7",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 96,
+  width = 16,
+  height = 16,
+  pattern = "7",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 128,
+  width = 16,
+  height = 16,
+  pattern = "7",
+}
+
+tile{
+  layer = 0,
+  x = 304,
+  y = 64,
+  width = 16,
+  height = 16,
+  pattern = "6",
+}
+
+tile{
+  layer = 0,
+  x = 304,
+  y = 96,
+  width = 16,
+  height = 16,
+  pattern = "6",
+}
+
+tile{
+  layer = 0,
+  x = 304,
+  y = 128,
+  width = 16,
+  height = 16,
+  pattern = "6",
+}
+
+tile{
+  layer = 0,
+  x = 304,
+  y = 160,
+  width = 16,
+  height = 16,
+  pattern = "6",
+}
+
+tile{
+  layer = 0,
+  x = 48,
+  y = 192,
+  width = 8,
+  height = 32,
+  pattern = "30",
+}
+
+tile{
+  layer = 0,
+  x = 264,
+  y = 192,
+  width = 8,
+  height = 32,
+  pattern = "31",
+}
+
+tile{
+  layer = 0,
+  x = 256,
+  y = 224,
+  width = 16,
+  height = 16,
+  pattern = "38",
+}
+
+tile{
+  layer = 0,
+  x = 296,
+  y = 32,
+  width = 16,
+  height = 16,
+  pattern = "34",
+}
+
+tile{
+  layer = 0,
+  x = 280,
+  y = 32,
+  width = 16,
+  height = 16,
+  pattern = "33",
+}
+
+tile{
+  layer = 0,
+  x = 264,
+  y = 32,
+  width = 16,
+  height = 16,
+  pattern = "36",
+}
+
+tile{
+  layer = 0,
+  x = 264,
+  y = 0,
+  width = 8,
+  height = 32,
+  pattern = "30",
+}
+
+tile{
+  layer = 0,
+  x = 56,
+  y = 0,
+  width = 208,
+  height = 16,
+  pattern = "37",
+}
+
+tile{
+  layer = 0,
+  x = 64,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+tile{
+  layer = 0,
+  x = 240,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+tile{
+  layer = 0,
+  x = 88,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+tile{
+  layer = 0,
+  x = 216,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+tile{
+  layer = 0,
+  x = 184,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+tile{
+  layer = 0,
+  x = 120,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+teletransporter{
+  layer = 0,
+  x = 152,
+  y = 240,
+  width = 16,
+  height = 16,
+  transition = "scrolling",
+  destination_map = "fir_dungeon/b1-4",
+  destination = "_side",
+}
+

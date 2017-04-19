@@ -1,0 +1,291 @@
+properties{
+  x = 0,
+  y = 480,
+  width = 320,
+  height = 240,
+  min_layer = 0,
+  max_layer = 2,
+  tileset = "castle",
+  music = "cave",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 0,
+  width = 320,
+  height = 240,
+  pattern = "3",
+}
+
+tile{
+  layer = 0,
+  x = 64,
+  y = 72,
+  width = 192,
+  height = 96,
+  pattern = "67",
+}
+
+tile{
+  layer = 0,
+  x = 144,
+  y = 104,
+  width = 16,
+  height = 24,
+  pattern = "4",
+}
+
+tile{
+  layer = 0,
+  x = 16,
+  y = 224,
+  width = 288,
+  height = 16,
+  pattern = "37",
+}
+
+tile{
+  layer = 0,
+  x = 304,
+  y = 224,
+  width = 16,
+  height = 16,
+  pattern = "38",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 224,
+  width = 16,
+  height = 16,
+  pattern = "36",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 16,
+  width = 8,
+  height = 208,
+  pattern = "30",
+}
+
+tile{
+  layer = 0,
+  x = 8,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "33",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 0,
+  width = 8,
+  height = 16,
+  pattern = "32",
+}
+
+tile{
+  layer = 0,
+  x = 16,
+  y = 0,
+  width = 288,
+  height = 16,
+  pattern = "37",
+}
+
+tile{
+  layer = 0,
+  x = 296,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "34",
+}
+
+tile{
+  layer = 0,
+  x = 312,
+  y = 0,
+  width = 8,
+  height = 16,
+  pattern = "35",
+}
+
+tile{
+  layer = 0,
+  x = 312,
+  y = 16,
+  width = 8,
+  height = 208,
+  pattern = "31",
+}
+
+tile{
+  layer = 0,
+  x = 152,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+tile{
+  layer = 0,
+  x = 120,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+tile{
+  layer = 0,
+  x = 184,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+tile{
+  layer = 0,
+  x = 88,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+tile{
+  layer = 0,
+  x = 216,
+  y = 0,
+  width = 16,
+  height = 16,
+  pattern = "8",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 72,
+  width = 16,
+  height = 16,
+  pattern = "7",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 104,
+  width = 16,
+  height = 16,
+  pattern = "7",
+}
+
+tile{
+  layer = 0,
+  x = 0,
+  y = 136,
+  width = 16,
+  height = 16,
+  pattern = "7",
+}
+
+tile{
+  layer = 0,
+  x = 304,
+  y = 72,
+  width = 16,
+  height = 16,
+  pattern = "6",
+}
+
+tile{
+  layer = 0,
+  x = 304,
+  y = 104,
+  width = 16,
+  height = 16,
+  pattern = "6",
+}
+
+tile{
+  layer = 0,
+  x = 304,
+  y = 136,
+  width = 16,
+  height = 16,
+  pattern = "6",
+}
+
+teletransporter{
+  name = "fir-dungeon-b1",
+  layer = 0,
+  x = 144,
+  y = 112,
+  width = 16,
+  height = 16,
+  destination_map = "fir_dungeon/b1-3",
+  destination = "fir-dungeon-high",
+  sound = "stairs_up_end",
+}
+
+destination{
+  name = "fir-dungeon-low",
+  layer = 0,
+  x = 168,
+  y = 125,
+  direction = 0,
+}
+
+block{
+  name = "static_block",
+  layer = 0,
+  x = 40,
+  y = 197,
+  sprite = "entities/block",
+  pushable = false,
+  pullable = false,
+  maximum_moves = 1,
+}
+
+block{
+  name = "static_block_2",
+  layer = 0,
+  x = 280,
+  y = 197,
+  sprite = "entities/block",
+  pushable = false,
+  pullable = false,
+  maximum_moves = 1,
+}
+
+block{
+  name = "static_block_3",
+  layer = 0,
+  x = 40,
+  y = 53,
+  sprite = "entities/block",
+  pushable = false,
+  pullable = false,
+  maximum_moves = 1,
+}
+
+block{
+  name = "static_block_4",
+  layer = 0,
+  x = 280,
+  y = 53,
+  sprite = "entities/block",
+  pushable = false,
+  pullable = false,
+  maximum_moves = 1,
+}
+
