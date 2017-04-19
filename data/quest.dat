@@ -1,0 +1,18 @@
+quest{
+  solarus_version = "1.5",
+  write_dir = "65129ae2-fab1-46f9-aa42-64fbf5d42b80",
+  title = "The Epic of Den (noncanon version)",
+  short_description = "A boy's adventures in the islands.",
+  long_description = [[
+This is an alpha-stage sample so far.
+Not planning anything yet except for this sample dungeon.
+Sample sprites are only temporary until I can get some actual work done.]],
+  author = "boaromayo",
+  quest_version = "0.1.1",
+  release_date = "",
+  website = "",
+  normal_quest_size = "320x240",
+  min_quest_size = "320x240",
+  max_quest_size = "640x480",
+}
+
