@@ -15,24 +15,28 @@ function game:initialize_hud()
   -- Create currency.
   --local coin_init = require("scripts/hud/coin")
 
+  -- Create table for HUD components.
+  self.hud = {}
+
   -- Add components to HUD.
   menu = heart_icon_init:new(self)
   menu:set_dst_position(8, 8)
-  self.heart_icon = menu
+  self.hud.heart_icon = menu
   
   menu = life_bar_init:new(self)
   menu:set_dst_position(32, 12)
-  self.life_bar = menu
+  self.hud.life_bar = menu
 
   --[[
   menu = tech_bar_init:new(self)
   menu:set_dst_position()
-  self.tech_bar = menu
+  self.hud.tech_bar = menu
 
   menu = coin_init:new(self)
   menu:set_dst_position(8, 100)
-  self.coin = menu
+  self.hud.coin = menu
   --]]
+
   self:set_hud_visible(true)
 
   self:update_hud()
@@ -57,9 +61,9 @@ function game:update_hud()
     end
 
     if opacity ~= nil then
-      self.heart_icon.surface:set_opacity(opacity)
-      self.life_bar.surface:set_opacity(opacity)
-      --self.tech_bar.surface:set_opacity(opacity)
+      self.hud.heart_icon.surface:set_opacity(opacity)
+      self.hud.life_bar.surface:set_opacity(opacity)
+      --self.hud.tech_bar.surface:set_opacity(opacity)
     end
   end
 
@@ -74,20 +78,21 @@ function game:quit_hud()
   if self:is_hud_visible() then
     self.set_hud_visible(false)
   end
-  -- Shut everything off.
-  self.heart_icon, self.life_bar = nil
+  -- Take everything out.
+  self.hud = nil
 end
 
 function game:set_hud_visible(hud_visible)
   if hud_visible ~= self.hud_visible then
     self.hud_visible = hud_visible
 
-    if hud_visible then
-      sol.menu.start(self, heart_icon)
-      sol.menu.start(self, life_bar)
-    else
-      sol.menu.stop(heart_icon)
-      sol.menu.stop(life_bar)
+    -- Generate HUD components to menu.
+    for i, menu in ipairs(self.hud) do
+      if hud_visible then
+        sol.menu.start(self, menu)
+      else
+        sol.menu.stop(menu)
+      end
     end
   end
 end
