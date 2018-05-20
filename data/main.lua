@@ -6,6 +6,9 @@ local game_manager = require("scripts/game_manager")
 
 -- Upload the required scripts.
 local solarus_logo = require("scripts/menus/solarus_logo")
+local boaromayo_logo = require("scripts/menus/boaromayo_logo")
+--local title_screen = require("scripts/menus/title_screen")
+--local file_screen = require("scripts/menus/file_screen")
 
 -- This function is called when Solarus starts.
 function sol.main:on_started()
@@ -16,11 +19,24 @@ function sol.main:on_started()
   -- Show the Solarus logo initially.
   sol.menu.start(self, solarus_logo)
 
-  -- Start the game when the Solarus logo menu is finished.
-  function solarus_logo:on_finished()
-    game_manager:start_game()
+  -- Show the |boaromayo logo next.
+  solarus_logo.on_finished = function()
+    sol.menu.start(self, boaromayo_logo)
   end
 
+  -- Then the title screen.
+  boaromayo_logo.on_finished = function()
+    game_manager:start_game()
+    --sol.menu.start(self, title_screen)
+  end
+
+  --[[ Then the file menu.
+  title_screen.on_finished = function()
+    sol.menu.start(self, file_screen)
+  end
+  --]]
+
+  -- Start the game when the |boaromayo logo menu is finished.
 end
 
 -- Event called when the player pressed a keyboard key.
