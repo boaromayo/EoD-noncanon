@@ -40,6 +40,8 @@ local dialog_box = {
 local visible_lines = 4     -- There are four lines in game.
 local width = 220           -- Set size of dialog box.
 local height = 112
+local decision_width = 48
+local decision_height = 48
 
 local char_delays = { 
   fastest = 10, 
@@ -100,7 +102,7 @@ end
 -- When dialog box is open.
 function dialog_box:on_started()
   -- Initialize properties of dialog box.
-  self.char_delay = char_delays["fast"]
+  self.char_delay = char_delays["normal"]
 
   -- Position dialog box on screen.
   local cam_w, cam_h = map:get_camera():get_size()
@@ -182,7 +184,7 @@ end
 
 -- Drawing method.
 function dialog_box:on_draw(screen)
-  local x, y = self.surface_position.x, self.surface_position.y
+  local x, y = self.box_position.x, self.box_position.y
 
   self.surface:clear()
 
@@ -206,7 +208,7 @@ function dialog_box:on_draw(screen)
 
   -- Do not draw anything at end-of-dialog.
 
-  -- Final blit to draw on-screen.
+  -- Draw to screen.
   self.surface:draw(screen)
 end
 
@@ -215,6 +217,8 @@ function dialog_box:on_key_pressed(key)
 
   if key == "return" then
     skipped = true
+  elseif key == "space" then
+    self.char_delay = char_delays["fastest"]
   end
 
 end
