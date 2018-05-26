@@ -8,7 +8,7 @@ local dialog_box = {
   -- Default dialog settings.
   dialog = nil,          -- No dialog available.
   info = nil,            -- Info to put dialog box in.
-  icon_index = 0,        -- Index for icon for question and end dialog.
+  icon_index = 1,        -- Index for icon for question and end dialog.
   first = true,          -- If this is the first dialog in game.
   skipped = false,       -- If dialog is skipped.
   answer = nil,          -- Selected answer (1 or 2) for decision-making.
@@ -108,9 +108,10 @@ function dialog_box:on_started()
   local x = cam_w / 2 - self.surface:get_width()
   local y = cam_h - 10
 
-  -- Make positions of 
+  -- Set positions of dialog images.
   self.box_position = { x = x, y = y }
-  self.question_icon_position = { x = x, y = y + height - 4 }
+  self.decision_box_position = { x = x + 16, y = y + height }
+  self.decision_icon_position = { x = x, y = y + height - 45 }
 
   self:show_dialog()
 end
@@ -131,7 +132,7 @@ function dialog_box:show_dialog()
 
   -- Split text into lines.
   dialog.text = dialog.text:gsub("\r\n", "\n"):gsub("\r", "\n")
-  dialog_box.iterator = dialog.text:gmatch("([^\n]*)\n") -- Every line plus empty lines.
+  dialog_box.iterator = dialog.text:gmatch("([^\n]*)\n") -- Every line plus empty lines are counted.
   dialog_box.next_line = dialog_box.iterator
   dialog_box.index = 1
   dialog_box.char_index = 1
@@ -197,17 +198,13 @@ function dialog_box:on_draw(screen)
     self.line_surfaces[i]:draw(self.surface, text_x, text_y)
   end
 
-  -- Draw decision cursor.
+  -- Draw decision box and cursor.
   --[[if self.answer ~= nil and 
       self:is_full and 
       self:has_more_lines() then
   end--]]
 
-  -- Draw end icons.
-  if self:is_full() then
-    self.end_icon_surface:draw(self.surface, 
-      x + width / 2, y + height - 8)
-  end
+  -- Do not draw anything at end-of-dialog.
 
   -- Final blit to draw on-screen.
   self.surface:draw(screen)
