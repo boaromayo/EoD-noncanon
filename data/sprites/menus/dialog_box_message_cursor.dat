@@ -4,7 +4,7 @@ animation{
   frame_delay = 300,
   frame_to_loop_on = 0,
   directions = {
-    { x = 48, y = 118, frame_width = 16, frame_height = 8, origin_x = 8, origin_y = 10, num_frames = 2 },
+    { x = 48, y = 86, frame_width = 13, frame_height = 8, origin_x = 8, origin_y = 10, num_frames = 2 },
   },
 }
 animation{
