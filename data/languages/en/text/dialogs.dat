@@ -2,42 +2,57 @@ dialog{
   id = "_treasure.sword.1",
   text = [[
 You found a sword!
-Press C to slash your way
-to victory (or escape)!
+Press C to slash your
+way to victory 
+(or escape)!
 ]]
 }
 
 dialog{
   id = "fern.hello",
   text = [[
-Hello! Lookin' for someone
-who can help me with
-something.
+Hello! Lookin' for 
+someone who can help
+me with something.
 ]]
 }
 
 dialog{
   id = "fern.hello2",
   text = [[
+Oh, hello there!
+Hope you're doing well!
 ]]
 }
 
 dialog{
   id = "fern.no",
   text = [[
-I see. If you're not that 
-busy, come and help old Fern, 
+I see. If you're not 
+that busy, come and 
+help old Fern, 
 won't you?
 ]]
 }
 
 dialog{
+  id = "fern.no_item",
+  text = [[
+You haven't found
+my very important
+item yet?
+
+Hurry up, please!
+]]
+}
+
+dialog{
   id = "fern.request",
-  question = "1",
+  answer = "1",
   text = [[
 Can you help me?
- $? Sure
- $? No
+Sure
+No
 ]]
 }
 
@@ -56,12 +71,13 @@ dialog{
 dialog{
   id = "fern.weapon",
   text = [[
-A box of weapons is in the chest
-next to me.
+A sword is in the
+chest next to me.
 
 
-Please find my very, uber important
-item quickly, please!
+Please find my uber
+important item
+quickly, please!
 ]]
 }
 
@@ -69,13 +85,15 @@ dialog{
   id = "fern.yes",
   text = [[
 Good!
-I've lost my special,
-super important item in the
-dungeon below.
+I've lost my 
+special, super 
+important item in 
+the dungeon below.
 
 
-Please find it for me down
-there!
+
+Please find it for
+me down there!
 ]]
 }
 
