@@ -1,0 +1,16 @@
+animation{
+  name = "normal",
+  src_image = "hud/gauge.png",
+  directions = {
+    { x = 0, y = 0, frame_width = 52, frame_height = 5, origin_x = 26, origin_y = 4 },
+  },
+}
+animation{
+  name = "danger",
+  src_image = "hud/gauge.png",
+  frame_delay = 400,
+  frame_to_loop_on = 0,
+  directions = {
+    { x = 0, y = 0, frame_width = 52, frame_height = 5, origin_x = 26, origin_y = 4, num_frames = 2, num_columns = 1 },
+  },
+}
