@@ -26,7 +26,7 @@ local dialog_box = {
   -- Graphics settings.
   surface = nil,              -- Dialog surface.
   box_surface = nil,          -- Dialog box.
-  icon_sprite = nil,          -- Dialog arrow icon (for question or next dialog).
+  arrow_sprite = nil,         -- Dialog arrow icon (for question or next dialog).
 
   -- Positions for surfaces.
   box_position = nil,           -- For dialog box.
@@ -61,7 +61,7 @@ function game:initialize_dialog_box()
   -- Initialize drawing surface.
   dialog_box.surface = sol.surface.create(sol.video.get_quest_size())
   dialog_box.box_surface = sol.surface.create("menus/dialog_box.png")
-  dialog_box.icon_sprite = sol.sprite.create("menus/dialog_box_message_cursor")
+  dialog_box.arrow_sprite = sol.sprite.create("menus/dialog_box_message_cursor")
   
   -- Initialize text lines.
   for i = 1, visible_lines do
@@ -176,7 +176,7 @@ local function show_character()
   else
     if dialog:has_more_lines()
         or dialog.dialog.next ~= nil then
-      dialog.icon_sprite:set_animation("next")
+      dialog.arrow_sprite:set_animation("next")
       --game:set_custom_command("action", "next")
     else
       --game:set_custom_command("action", "return")
@@ -366,22 +366,15 @@ function dialog_box:on_draw(screen)
   self.surface:clear()
 
   -- Draw dialog box.
-  self.box_surface:draw_region(0, 0, 
-    width, height, self.surface, x, y)
+  self.box_surface:draw_region(0, 0, width, height, self.surface, x, y)
 
   -- Draw text.
   local text_x = x + spacing / 2
-  local text_y = y - spacing / 2
+  local text_y = y + spacing / 2
   for i = 1, visible_lines do
-    text_y = text_y + spacing
-    if self.answer ~= nil
-        and i == visible_lines - 1
-        and not self:has_more_lines() then
-      -- Indent answers.
-      text_x = text_x + spacing
-    end
-    -- Draw text to screen.
+    -- Draw text to screen and return to next line.
     self.line_surfaces[i]:draw(self.surface, text_x, text_y)
+    text_y = text_y + spacing
   end
 
   -- Draw decision box and cursor.
@@ -400,8 +393,9 @@ function dialog_box:on_draw(screen)
   end--]]
 
   -- Draw next line cursor.
-  if self.full then
-    self.icon_sprite:draw(self.surface, 
+  if self.full 
+      and self.arrow_sprite:get_animation() == "next" then
+    self.arrow_sprite:draw(self.surface, 
       x + width / 2, y + height)
   end
 
