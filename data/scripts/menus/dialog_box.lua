@@ -19,27 +19,25 @@ local dialog_box = {
   line_surfaces = {},    -- Table for the text surfaces.
   index = 0,             -- Index for line shown.
   char_index = 0,        -- Index for character in current line.
-  char_delay = 0,        -- In-between delay when displaying one-character-at-a-time.
+  char_delay = 0,        -- Delay when displaying one-character-at-a-time.
   full = false,          -- If dialog box is full, or all lines in box are shown.
   letter_sound = false,  -- If letter-at-a-time sound is played.
   
   -- Graphics settings.
   surface = nil,              -- Dialog surface.
   box_surface = nil,          -- Dialog box.
-  decision_box_surface = nil, -- Dialog decision box.
-  decision_icon_surface = nil, -- Dialog decision icon.
-  end_lines_surface = nil,
+  icon_sprite = nil,          -- Dialog arrow icon (for question or next dialog).
 
   -- Positions for surfaces.
   box_position = nil,           -- For dialog box.
   decision_box_position = nil,  -- For decision box.
-  decision_icon_position = nil -- For decision cursor icon.
+  decision_icon_position = nil  -- For decision cursor icon.
 }
 
 -- CONSTANTS.
 local visible_lines = 4     -- There are four lines in game.
 local width = 220           -- Set size of dialog box.
-local height = 116
+local height = 84
 local decision_width = 48
 local decision_height = 48
 
@@ -58,11 +56,13 @@ function game:initialize_dialog_box()
 
   -- Font settings.
   local font = "lunchds"
-  local font_size = 24
+  local font_size = 16
 
   -- Initialize drawing surface.
-  dialog_box.surface = sol.surface.create("menus/dialog_box.png")
-
+  dialog_box.surface = sol.surface.create(sol.video.get_quest_size())
+  dialog_box.box_surface = sol.surface.create("menus/dialog_box.png")
+  dialog_box.icon_sprite = sol.sprite.create("menus/dialog_box_message_cursor")
+  
   -- Initialize text lines.
   for i = 1, visible_lines do
     dialog_box.lines[i] = ""
@@ -105,16 +105,16 @@ function dialog_box:on_started()
   self.char_delay = char_delays["normal"]
 
   -- Position dialog box on screen.
-  local map = game:get_map()
-  local cam_w, cam_h = map:get_camera():get_bounding_box()
+  local camera = game:get_map():get_camera()
+  local cam_w, cam_h = camera:get_size()
 
-  local x = cam_w / 2 - self.surface:get_width()
-  local y = cam_h - 10
+  local x = cam_w / 2 - (width / 2)
+  local y = cam_h - (height + 16)
 
   -- Set positions of dialog images.
   self.box_position = { x = x, y = y }
-  self.decision_box_position = { x = x, y = y - 48 }
-  self.decision_icon_position = { x = x + 48, y = y + height +  }
+  self.decision_box_position = { x = x, y = y - 50 }
+  self.decision_icon_position = { x = x + 8, y = y }
 
   self:show_dialog()
 end
@@ -150,8 +150,8 @@ function dialog_box:show_dialog()
     dialog_box.icon_index = dialog.icon
   end
 
-  -- Check if decision dialog.
-  if dialog.answer == "1" then
+  -- Check if dialog is a question.
+  if dialog.question == "1" then
     dialog_box.answer = 1 -- Answer either yes (1) or no (2).
   end
 
@@ -162,6 +162,7 @@ end
 local function show_character()
   local dialog = dialog_box
 
+  dialog:is_full() -- Check for "full" line.
   while not dialog.full and
       dialog.char_index > #dialog.lines[dialog.index] do
     -- Check if line finished.
@@ -174,9 +175,8 @@ local function show_character()
     dialog:add_character()
   else
     if dialog:has_more_lines()
-        or dialog.dialog.next ~= nil
-        or dialog.answer ~= nil then
-      dialog.end_lines_surface:set_animation("next")
+        or dialog.dialog.next ~= nil then
+      dialog.icon_sprite:set_animation("next")
       --game:set_custom_command("action", "next")
     else
       --game:set_custom_command("action", "return")
@@ -248,8 +248,8 @@ function dialog_box:show_next_dialog()
 end
 
 -- Add a character one-by-one to the dialog box.
--- If the case is a special character (like $i for decisions, 
--- or $n for a name), then perform action for character here.
+-- If the case is a special character, then perform
+-- action for character here.
 function dialog_box:add_character()
   -- Setup the line and character on line.
   local line = self.lines[self.index]
@@ -265,8 +265,10 @@ function dialog_box:add_character()
   local is_special = false
 
   -- Special characters:
-  -- (0,|) - additional delays
-  -- (1-6) - speed of dialog from fastest to slowest
+  -- - $0: delay
+  -- - $|: delay for two secs
+  -- - $[1-6]: change dialog speed from fastest to slowest
+  -- - space: remove delay
   if character == "$" then
     is_special = true
     character = line:sub(self.char_index, self.char_index)
@@ -310,21 +312,48 @@ function dialog_box:add_character()
   text:set_text(text:get_text() .. character)
 
   -- Play sound for each character drawn.
-  --[[sol.audio.play_sound("")
+  sol.audio.play_sound("message_letter")
   self.letter_sound = false
-  sol.timer.start(self, , function()
+  sol.timer.start(self, 100 + self.char_delay, function()
     self.letter_sound = true
-  end)--]]
+  end)
 
   -- Set delays.
   sol.timer.start(self, self.char_delay + more_delay, show_character)
 end
 
+-- Skip showing text one-by-one, show entire text now.
+-- If the 4 lines are complete, 
+-- show next 4 lines of dialog if more.
+function dialog_box:show_all()
+  if self.full then
+    self:show_more_lines()
+  else
+    -- Check the end of the current line.
+    self:is_full()
+    while not self.full do
+      while not self.full
+          and self.char_index > #self.lines[self.index] do
+        self.char_index = 1
+        self.index = self.index + 1
+        self:is_full()
+      end
+
+      if not self.full then
+        self:add_character()
+      end
+
+      self:is_full()
+    end
+  end
+end
+
+
 -- Check if dialog box is full. 
 -- By "full", this means that all of the lines in
 -- the dialog box are fully displayed.
 function dialog_box:is_full()
-  self.full = (dialog_box.line_index >= visible_lines) and 
+  self.full = (dialog_box.index >= visible_lines) and 
     (dialog_box.char_index > #dialog_box.lines[visible_lines])
   return self.full
 end
@@ -332,6 +361,7 @@ end
 -- Draw method.
 function dialog_box:on_draw(screen)
   local x, y = self.box_position.x, self.box_position.y
+  local spacing = 16
 
   self.surface:clear()
 
@@ -340,26 +370,39 @@ function dialog_box:on_draw(screen)
     width, height, self.surface, x, y)
 
   -- Draw text.
-  local text_x = 12
-  local text_y = y
+  local text_x = x + spacing / 2
+  local text_y = y - spacing / 2
   for i = 1, visible_lines do
-    text_y = text_y + 24
+    text_y = text_y + spacing
+    if self.answer ~= nil
+        and i == visible_lines - 1
+        and not self:has_more_lines() then
+      -- Indent answers.
+      text_x = text_x + spacing
+    end
+    -- Draw text to screen.
     self.line_surfaces[i]:draw(self.surface, text_x, text_y)
   end
 
-  -- Draw decision/question box and cursor.
-  if self.answer ~= nil 
+  -- Draw decision box and cursor.
+  --[[if self.answer ~= nil 
       and self.full 
-      and self:has_more_lines() then
+      and not self:has_more_lines() then
     local cursor_pos = (self.answer == 1 
       and self.decision_icon_position.y + 8 
       or self.decision_icon_position.y + 20)
     self.decision_box_position.y = self.box_position.y - 48
-    self.box_surface:draw_region(0, 116, 
-      decision_box_width, decision_box_height, self.surface, 
+    --[[self.box_surface:draw_region(0, 116, 
+      decision_width, decision_height, self.surface, 
       self.decision_box_position.x, self.decision_box_position.y)
     self.box_surface:draw_region(48, 134, 8, 16, self.surface, 
       self.decision_icon_position.x + 4, cursor_pos)
+  end--]]
+
+  -- Draw next line cursor.
+  if self.full then
+    self.icon_sprite:draw(self.surface, 
+      x + width / 2, y + height)
   end
 
   -- Draw to screen.
@@ -385,7 +428,7 @@ function dialog_box:on_key_pressed(key)
     if self.answer ~= nil
         and self:is_full()
         and not self:has_more_lines() then
-      --sol.audio.play_sound("") -- Play cursor sound.
+      sol.audio.play_sound("cursor") -- Play cursor sound.
       self.answer = 3 - self.answer -- Switch between 1 (yes) or 2 (no).
     end
     handled = true
