@@ -9,14 +9,16 @@
 
 local map = ...
 local game = map:get_game()
-local event_no = game:get_value("fern")
-local fern = map:get_entity("fern")
+local fern = map:get_entity("Fern")
+
+-- Check event conditions.
+local fern_quest = game:get_value("fern")
 
 -- Event called as soon as this map is loaded.
 function map:on_started()
-  -- Check if this quest finished, then move Fern
-  -- to shop bench.
-  if event_no > 3 then
+  -- Check if quest finished, move Fern
+  -- to shop bench if it is.
+  if fern_quest == 5 then
     fern:set_position(256, 56)
   else
     fern:set_position(80, 56)
@@ -31,50 +33,56 @@ hello2: greet after dungeon finish
 request: ask for request
 yes: accept
 no: oh, well
+no_item: ask if hero has item
 weapon: chest has a weapon to use
-tip: give tips on dungeon
+tip: give tips on item
 reward: praise player and give prize
 --=========================
 --]]
 function map:fern_dialog()
-  -- Make checks for event variable
-  if event_no == nil then
-    event_no = 0
-    game:set_value("fern", event_no)
+  -- In any case fern event was not initialized.
+  if fern_quest == nil then
+    fern_quest = 0
+    game:set_value("fern", 0)
+  end
+  -- After getting weapon in chest,
+  -- have her ask if hero has item.
+  if game:get_value("c1") == true then
+    game:set_value("fern", 3)
+    fern_quest = game:get_value("fern")
   end
   -- Introduce fern to player.
-  if event_no == 0 then
+  if fern_quest == 0 then
+    print("fern active")
     game:start_dialog("fern.hello", function()
       game:start_dialog("fern.request", function(answer)
-        if answer == 1 then
-          game:start_dialog("fern.yes", confirm)
-        else
+        if answer == 1 then -- If yes.
+          game:start_dialog("fern.yes", function()
+            game:start_dialog("fern.weapon")
+            game:set_value("fern", 1)
+            fern_quest = game:get_value("fern")
+          end)
+        else -- If no, be disappointed.
           game:start_dialog("fern.no")
         end
       end)
     end) -- Call decision function.
-  elseif event_no == 1 then
+  elseif fern_quest == 1 then
     game:start_dialog("fern.weapon") -- Mention weapon in chest.
-  elseif event_no == 2 then
-    game:start_dialog("fern.reward") -- Give reward if quest finished.
-    game:get_reward("very-important-item") -- Reward's the very important item.
-    confirm()
-  elseif event_no == 3 then
+    game:set_value("fern", 2)
+    fern_quest = game:get_value("fern")
+  elseif fern_quest == 2 then
     game:start_dialog("fern.tip") -- Tell tips on item.
-  elseif event_no > 3 then
+    game:set_value("fern", 1)
+    fern_quest = game:get_value("fern")
+  elseif fern_quest == 3 then
+    game:start_dialog("fern.no_item") -- If item not found yet.
+  elseif fern_quest == 4 then
+    game:start_dialog("fern.reward") -- Give reward if quest finished.
+    game:get_reward("very-important-item") -- Rewards very important item.
+    game:set_value("fern", 5)
+    fern_quest = game:get_value("fern")
+  else
     game:start_dialog("fern.hello2") -- When revisit, greet from bench.
   end
-end
-
-local function next_dialog(answer)
-  if answer == 1 then
-    game:start_dialog("fern.yes", confirm)
-  else
-    game:start_dialog("fern.no")
-  end
-end
-
--- Increase event var for fern house.
-local function confirm()
-   event_no = event_no + 1
 end
