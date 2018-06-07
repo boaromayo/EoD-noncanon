@@ -48,7 +48,7 @@ Hurry up, please!
 
 dialog{
   id = "fern.request",
-  answer = "1",
+  question = "1",
   text = [[
 Can you help me?
 Sure
@@ -65,6 +65,12 @@ dialog{
 dialog{
   id = "fern.tip",
   text = [[
+The item looks like
+a small crystal ball,
+but it's red.
+
+Please, oh please
+find it quickly!
 ]]
 }
 
