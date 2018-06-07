@@ -45,22 +45,20 @@ function map:fern_dialog()
     fern_quest = 0
     game:set_value("fern", 0)
   end
-  -- After getting weapon in chest,
-  -- have her ask if hero has item.
-  if game:get_value("c1") == true then
-    game:set_value("fern", 3)
-    fern_quest = game:get_value("fern")
-  end
   -- Introduce fern to player.
   if fern_quest == 0 then
-    print("fern active")
     game:start_dialog("fern.hello", function()
       game:start_dialog("fern.request", function(answer)
         if answer == 1 then -- If yes.
           game:start_dialog("fern.yes", function()
-            game:start_dialog("fern.weapon")
-            game:set_value("fern", 1)
-            fern_quest = game:get_value("fern")
+            if game:get_value("c1") == true then -- If got sword, skip weapon dialogue.
+              game:set_value("fern", 3)
+              fern_quest = game:get_value("fern")
+            else
+              game:start_dialog("fern.weapon")
+              game:set_value("fern", 2)
+              fern_quest = game:get_value("fern")
+            end
           end)
         else -- If no, be disappointed.
           game:start_dialog("fern.no")
@@ -84,5 +82,12 @@ function map:fern_dialog()
     fern_quest = game:get_value("fern")
   else
     game:start_dialog("fern.hello2") -- When revisit, greet from bench.
+  end
+  -- After getting weapon in chest,
+  -- ask if hero has item.
+  if (fern_quest == 1 or fern_quest == 2) 
+      and game:get_value("c1") == true then
+    game:set_value("fern", 3)
+    fern_quest = game:get_value("fern")
   end
 end
