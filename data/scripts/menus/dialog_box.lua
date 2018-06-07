@@ -246,6 +246,7 @@ function dialog_box:show_next_dialog()
       decision = self.answer == 1
     end
 
+    self.answer = nil -- Prevents decision box from appearing after decision made.
     game:stop_dialog(decision)
   end
 end
