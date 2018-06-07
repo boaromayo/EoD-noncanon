@@ -114,7 +114,7 @@ function dialog_box:on_started()
   -- Set positions of dialog images.
   self.box_position = { x = x, y = y }
   self.decision_box_position = { x = x, y = y - 50 }
-  self.decision_icon_position = { x = x + 8, y = y }
+  self.decision_icon_position = { x = x + 8, y = y - 42 }
 
   self:show_dialog()
 end
@@ -178,7 +178,10 @@ local function show_character()
         or dialog.dialog.next ~= nil then
       dialog.arrow_sprite:set_animation("next")
       --game:set_custom_command("action", "next")
+    elseif dialog.answer ~= nil then
+      dialog.arrow_sprite:set_animation("question")
     else
+      dialog.arrow_sprite:set_animation("last")
       --game:set_custom_command("action", "return")
     end
     --game:set_custom_command("attack", nil)
@@ -378,25 +381,26 @@ function dialog_box:on_draw(screen)
   end
 
   -- Draw decision box and cursor.
-  --[[if self.answer ~= nil 
+  if self.answer ~= nil 
       and self.full 
-      and not self:has_more_lines() then
+      and not self:has_more_lines() 
+      and self.arrow_sprite:get_animation() == "question" then
     local cursor_pos = (self.answer == 1 
-      and self.decision_icon_position.y + 8 
-      or self.decision_icon_position.y + 20)
+      and self.decision_icon_position.y + 14 
+      or self.decision_icon_position.y + 32)
     self.decision_box_position.y = self.box_position.y - 48
-    --[[self.box_surface:draw_region(0, 116, 
+    self.box_surface:draw_region(0, height, 
       decision_width, decision_height, self.surface, 
       self.decision_box_position.x, self.decision_box_position.y)
-    self.box_surface:draw_region(48, 134, 8, 16, self.surface, 
-      self.decision_icon_position.x + 4, cursor_pos)
-  end--]]
+    self.arrow_sprite:draw(self.surface, 
+      self.decision_icon_position.x, cursor_pos)
+  end
 
   -- Draw next line cursor.
   if self.full 
       and self.arrow_sprite:get_animation() == "next" then
     self.arrow_sprite:draw(self.surface, 
-      x + width / 2, y + height)
+      x + width / 2, y + height - 4)
   end
 
   -- Draw to screen.
