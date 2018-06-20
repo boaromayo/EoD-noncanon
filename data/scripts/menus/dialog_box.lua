@@ -7,7 +7,6 @@ local dialog_box = {
   -- Default dialog settings.
   dialog = nil,          -- No dialog available.
   info = nil,            -- Info to put dialog box in.
-  icon_index = 1,        -- Index for icon for question and end dialog.
   first = true,          -- If this is the first dialog in game.
   skipped = false,       -- If dialog is skipped.
   answer = nil,          -- Selected answer (1 or 2) for decision-making.
@@ -36,6 +35,8 @@ local dialog_box = {
 
 -- CONSTANTS.
 local visible_lines = 4     -- There are four lines in game.
+--[[local box_width = 284
+local box_height = 84--]]
 local width = 220           -- Set size of dialog box.
 local height = 84
 local decision_width = 48
@@ -55,7 +56,7 @@ function game:initialize_dialog_box()
   game.dialog_box = dialog_box
 
   -- Font settings.
-  local font = "lunchds"
+  local font = "lunchds-gradient"
   local font_size = 16
 
   -- Initialize drawing surface.
@@ -144,11 +145,11 @@ function dialog_box:show_dialog()
   dialog_box.letter_sound = false -- Change if letter sound imported.
 
   -- Check if icon is visible.
-  if dialog.icon == nil then
+  --[[if dialog.icon == nil then
     dialog_box.icon_index = 1
   else
     dialog_box.icon_index = dialog.icon
-  end
+  end--]]
 
   -- Check if dialog is a question.
   if dialog.question == "1" then
@@ -374,7 +375,7 @@ function dialog_box:on_draw(screen)
 
   -- Draw text.
   local text_x = x + spacing / 2
-  local text_y = y + spacing / 2
+  local text_y = y + 6
   for i = 1, visible_lines do
     -- Draw text to screen and return to next line.
     self.line_surfaces[i]:draw(self.surface, text_x, text_y)
