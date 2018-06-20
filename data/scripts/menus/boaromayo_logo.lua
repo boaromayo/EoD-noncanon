@@ -66,7 +66,7 @@ function boaromayo_logo:on_key_pressed(key)
   return handled -- Return to check if event was handled.
 end
 
--- Fade out logo.
+-- Fade out logo processing.
 function boaromayo_logo:on_pre_finish()
   sol.timer.start(self, 1000, function()
     self.surface:fade_out(30)
