@@ -5,6 +5,9 @@
 
 local boaromayo_logo = {}
 
+-- Set up global timer to set up fade out on logo.
+local timer = nil
+
 -- Start menu.
 function boaromayo_logo:on_started()
   -- Create main surface of logo.
@@ -26,8 +29,8 @@ function boaromayo_logo:show_logo()
 
   self.surface:fade_in()
   
-  -- Wait before activating pre-finish method.
-  sol.timer.start(self, 3000, function()
+  -- Set global timer to wait before fading out logo.
+  timer = sol.timer.start(self, 3000, function()
     self:on_pre_finish()
   end)
 end
@@ -50,12 +53,20 @@ function boaromayo_logo:on_key_pressed(key)
     handled = true
   -- Handle input to fade out logo.
   elseif key == "space" or key == "return" then
-    self:on_pre_finish()
+    -- Shut off global timer if it exists and fade out logo.
+    if timer ~= nil then
+      -- Stop timer and delete timer.
+      timer:stop()
+      timer = nil
+      -- Fade out logo.
+      self:on_pre_finish()
+    end
     handled = true
   end
+  return handled -- Return to check if event was handled.
 end
 
--- Do pre-finished process for logo.
+-- Fade out logo.
 function boaromayo_logo:on_pre_finish()
   sol.timer.start(self, 1000, function()
     self.surface:fade_out(30)
