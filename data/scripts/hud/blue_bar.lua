@@ -19,7 +19,7 @@ end
 function tech_bar:initialize(game)
   self.game = game
   self.surface = sol.surface.create(width * 3, height * 2)
-  self.text_surface = sol.text_surface.create{
+  self.text_surface = sol.text_surface.create {
     font = "8_bit",
     horizontal_alignment = "left"
   }
@@ -29,7 +29,7 @@ function tech_bar:initialize(game)
   self.max_tech = game:get_max_magic()
 end
 
--- 
+-- Automatically called when started.
 function tech_bar:on_started()
   self:update()
   self:redraw()

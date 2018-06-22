@@ -7,14 +7,12 @@ local game = ...
 -- Initialize HUD on top-left of screen.
 function game:initialize_hud()
   -- Load HUD components.
-  -- Heart icon.
-  --local heart_icon_init = require("scripts/hud/heart")
-  -- Red bar and health stats to indicate player's life.
+  -- Red bar and health stats for player's life.
   local life_bar_init = require("scripts/hud/red_bar")
-  -- Blue bar to indicate player's tech points.
+  -- Blue bar and tech stats for player's tech points.
   local tech_bar_init = require("scripts/hud/blue_bar")
   -- Currency.
-  --local coin_init = require("scripts/hud/coin")
+  local pesos_init = require("scripts/hud/pesos")
 
   -- Index counter to insert HUD components.
   local counter = 1
@@ -25,30 +23,26 @@ function game:initialize_hud()
   }
 
   -- Add components to HUD.
-  --[[local menu = heart_icon_init:new(self)
-  menu:set_dst_position(8, 8)
-  self.hud[counter] = menu
-  self.hud.heart_icon = menu
-  counter = counter + 1--]]
-  
+  -- Life bar.
   local menu = life_bar_init:new(self)
   menu:set_dst_position(12, 12)
   self.hud[counter] = menu
   self.hud.life_bar = menu
   counter = counter + 1
 
+  -- Tech bar.
   menu = tech_bar_init:new(self)
   menu:set_dst_position(12, 24)
   self.hud[counter] = menu
   self.hud.tech_bar = menu
   counter = counter + 1
 
-  --[[
-  menu = coin_init:new(self)
-  menu:set_dst_position(180, 24)
+  -- Currency.
+  menu = pesos_init:new(self)
+  menu:set_dst_position(270, 12)
   self.hud[counter] = menu
-  counter = counter + 1
-  --]]
+  self.hud.peso = menu
+--  counter = counter + 1
 
   self:set_hud_visible(true)
 
@@ -69,17 +63,27 @@ function game:update_hud()
     local x = hero_x - cam_x
     local y = hero_y - cam_y
     local opacity = nil
+    local money_opacity = nil
 
+    -- Adjust transparency if player is below gauges.
     if (x < 88 and y < 80) then
       opacity = 128
     elseif (x >= 88 or y >= 80) then
       opacity = 255
     end
 
+    -- Adjust transparency if player is below money counter.
+    if (x > 248 and y < 68) then
+      money_opacity = 128
+    elseif (x <= 248 or y >= 68) then
+      money_opacity = 255
+    end
+
     if opacity ~= nil then
       --self.hud.heart_icon.surface:set_opacity(opacity)
       self.hud.life_bar.surface:set_opacity(opacity)
       self.hud.tech_bar.surface:set_opacity(opacity)
+      self.hud.peso.surface:set_opacity(money_opacity)
     end
   end
 
