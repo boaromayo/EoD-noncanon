@@ -56,7 +56,7 @@ function game:initialize_dialog_box()
   game.dialog_box = dialog_box
 
   -- Font settings.
-  local font = "lunchds-gradient"
+  local font = "lunchds_blue"
   local font_size = 16
 
   -- Initialize drawing surface.
